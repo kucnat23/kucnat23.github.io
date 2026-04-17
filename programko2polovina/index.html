@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muzeum - Digitální Průvodce</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="sticky-nav">
+        <div class="logo">
+            <img src="images/logo.png" height="50" alt="Logo Muzea">
+        </div>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#domu">Domů</a></li>
+            <li><a href="#vystavy">Výstavy</a></li>
+            <li><a href="#vstupenky">Vstupenky</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <header>
+        <div class="hero-banner">
+            <img src="images/banner.jpeg" alt="Hlavní banner muzea">
+        </div>
+
+        <div class="hero-content">
+            <h1>Vítejte v muzeu</h1>
+            <p>Úvodní text o historii a významu muzea pro návštěvníky.</p>
+        </div>
+        
+        <div class="countdown-section">
+            <h3>Otevření nové výstavy za:</h3>
+            <div id="countdown" class="countdown-timer">
+                <div class="time-unit"><span id="days">00</span><p>Dní</p></div>
+                <div class="time-unit"><span id="hours">00</span><p>Hod</p></div>
+                <div class="time-unit"><span id="minutes">00</span><p>Min</p></div>
+                <div class="time-unit"><span id="seconds">00</span><p>Sek</p></div>
+            </div>
+        </div>
+    </header>
+
+    <section id="vystavy">
+        <h2 class="section-title">Aktuální výstavy</h2>
+        <div id="expozice-grid" class="grid-container">
+            </div>
+    </section>
+
+    <section id="vstupenky">
+        <h2 class="section-title">Rezervace vstupenek</h2>
+        <form id="reservation-form">
+            <input type="date" required>
+            <input type="time" required>
+            <input type="number" placeholder="Počet osob" min="1" required>
+            <select>
+                <option value="zakladni">Základní</option>
+                <option value="student">Studentské</option>
+                <option value="senior">Senior</option>
+            </select>
+            <input type="email" placeholder="Váš e-mail" required>
+            <button type="submit">Rezervovat vstupenky</button>
+        </form>
+    </section>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
