@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muzeum - Digitální Průvodce</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="sticky-nav">
+        <div class="logo">
+            <img src="images/logo.png" height="50" alt="Logo Muzea">
+        </div>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#domu">Domů</a></li>
+            <li><a href="#vystavy">Výstavy</a></li>
+            <li><a href="#vstupenky">Vstupenky</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <header>
+        <div class="hero-banner">
+            <img src="images/banner.jpeg" alt="Hlavní banner muzea">
+        </div>
+
+        <div class="hero-content">
+            <h1>Vítejte v muzeu</h1>
+            <p>Naše muzeum je jedinečným místem, kde se setkává vznešenost starých mistrů s dravou energií moderního umění. Pod jednou střechou můžete obdivovat precizní techniku historických pláten i odvážné experimenty současných tvůrců, které posouvají hranice lidské představivosti. Přijďte prozkoumat fascinující vývoj uměleckého vyjádření a objevte, jak se tradice a inovace navzájem inspirují napříč staletími.</p>
+        </div>
+        
+        <div class="countdown-section">
+            <h3>Otevření nové výstavy za:</h3>
+            <div id="countdown" class="countdown-timer">
+                <div class="time-unit"><span id="days">00</span><p>Dní</p></div>
+                <div class="time-unit"><span id="hours">00</span><p>Hod</p></div>
+                <div class="time-unit"><span id="minutes">00</span><p>Min</p></div>
+                <div class="time-unit"><span id="seconds">00</span><p>Sek</p></div>
+            </div>
+        </div>
+    </header>
+
+    <section id="premium">
+        <h2 class="section-title">Prémiové výstavy</h2>
+        <div class="carousel-container">
+            <button class="carousel-btn prev" id="prevBtn">&#10094;</button>
+            
+            <div class="carousel-track-container">
+                <div class="carousel-track" id="carouselTrack">
+                    <!-- 1. Skupina -->
+                    <div class="carousel-card"><img src="images/premiova1.jpeg" alt="1"><h3>Výstava umělce Salvadora Dalí</h3></div>
+                    <div class="carousel-card"><img src="images/premiova2.jpeg" alt="2"><h3>Příběhy v rámech</h3></div>
+                    <div class="carousel-card"><img src="images/premiova3.jpeg" alt="3"><h3>Moderní umění - Františka Kupky</h3></div>
+                    <!-- 2. Skupina -->
+                    <div class="carousel-card"><img src="images/premiova4.jpeg" alt="4"><h3>Tvář antiky</h3></div>
+                    <div class="carousel-card"><img src="images/premiova5.jpeg" alt="5"><h3>Galerie předků</h3></div>
+                    <div class="carousel-card"><img src="images/premiova6.jpeg" alt="6"><h3>Zlatý věk malby</h3></div>
+                    <!-- 3. Skupina -->
+                    <div class="carousel-card"><img src="images/premiova7.jpeg" alt="7"><h3>Síla živlů</h3></div>
+                    <div class="carousel-card"><img src="images/premiova8.jpeg" alt="8"><h3>Královský azur</h3></div>
+                    <div class="carousel-card"><img src="images/premiova9.jpeg" alt="9"><h3>Nová perspektiva</h3></div>
+                </div>
+            </div>
+
+            <button class="carousel-btn next" id="nextBtn">&#10095;</button>
+        </div>
+    </section>
+    <!-- Tečky pod carouselem -->
+    <div class="carousel-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+    </section>
+
+    <!-- Přehled výstav (Zde se plní data z CSV) -->
+    <section id="vystavy">
+        <h2 class="section-title">Přehled výstav</h2>
+        <div id="expozice-grid" class="grid-container">
+            <?php
+            // Cesta k souboru podle tvé struktury ve složkách
+            $csvFile = 'data/expozice.csv';
+
+            if (file_exists($csvFile)) {
+                if (($handle = fopen($csvFile, "r")) !== FALSE) {
+                    // Přeskočíme první řádek (hlavičku)
+                    fgetcsv($handle, 1000, ",");
+
+                    // Čteme řádek po řádku
+                    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                        // Podle CSV: 0=Název, 1=Popis, 2=Kategorie, 3=Cesta k obrázku
+                        $nazev = htmlspecialchars($data[0]);
+                        $popis = htmlspecialchars($data[1]);
+                        $kategorie = htmlspecialchars($data[2]);
+                        $obrazek = htmlspecialchars($data[3]);
+
+                        // Vypíšeme kartu (struktura zůstává stejná jako v CSS)
+                        echo "
+                        <div class='card'>
+                            <div class='card-img-box'>
+                                <img src='$obrazek' alt='$nazev'>
+                            </div>
+                            <div class='card-title-box'>
+                                <h3>$nazev</h3>
+                            </div>
+                            <p class='category-text'>Kategorie: $kategorie</p>
+                            <div class='card-desc-box'>
+                                <p>$popis</p>
+                            </div>
+                        </div>";
+                    }
+                    fclose($handle);
+                }
+            } else {
+                echo "<p style='color: white;'>Data nebyla nalezena (data/expozice.csv chybí).</p>";
+            }
+            ?>
+        </div>
+    </section>
+
+    <section id="vstupne">
+    <h2 class="section-title">Vstupné</h2>
+    <div class="vstupne-container">
+        
+        <div class="vstupne-row">
+            <span class="vstupne-typ">ZÁKLADNÍ</span>
+            <span class="vstupne-cena">200 Kč</span>
+        </div>
+
+        <div class="vstupne-row">
+            <span class="vstupne-typ">SNÍŽENÉ</span>
+            <span class="vstupne-cena">150 Kč</span>
+        </div>
+
+        <div class="vstupne-row">
+            <span class="vstupne-typ">RODINNÉ</span>
+            <span class="vstupne-cena">450 Kč</span>
+        </div>
+
+        <div class="vstupne-row">
+            <span class="vstupne-typ">ŠKOLNÍ SKUPINY</span>
+            <span class="vstupne-cena">100 Kč</span>
+        </div>
+
+    </div>
+    </section>
+
+    <section id="vstupenky">
+        <h2 class="section-title">Rezervace vstupenek</h2>
+        <form id="reservation-form">
+            <input type="date" required>
+            <input type="time" required>
+            <input type="number" placeholder="Počet osob" min="1" required>
+            <select>
+                <option value="zakladni">Základní</option>
+                <option value="student">Studentské</option>
+                <option value="senior">Senior</option>
+            </select>
+            <input type="email" placeholder="Váš e-mail" required>
+            <button type="submit">Rezervovat vstupenky</button>
+        </form>
+    </section>
+
+    <!--Recenze navstevniku a  otazky -->
+    <section id="recenze">
+    <h2 class="section-title">Recenze návštěvníků</h2>
+    <div class="reviews-container">
+        <div class="review-card">
+            <div class="review-header">
+                <span class="visitor-name">Jan Novák</span>
+                <span class="stars">★★★★★</span>
+            </div>
+            <p>"Úžasný zážitek! Moderní přístup k historii a skvělá atmosféra. Určitě doporučuji všem."</p>
+        </div>
+        <div class="review-card">
+            <div class="review-header">
+                <span class="visitor-name">Marie Svobodová</span>
+                <span class="stars">★★★★☆</span>
+            </div>
+            <p>"Velmi pěkné expozice. Jen u vstupu byla trochu fronta, ale digitální průvodce fungoval skvěle."</p>
+        </div>
+        <div class="review-card">
+            <div class="review-header">
+                <span class="visitor-name">Petr Černý</span>
+                <span class="stars">★★★★★</span>
+            </div>
+            <p>"Nejlepší muzeum, které jsem v poslední době navštívil. Interaktivní prvky jsou top!"</p>
+        </div>
+    </div>
+    </section>
+
+    <section id="faq">
+        <h2 class="section-title">Často kladené otázky</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question">Jaká je otevírací doba? <span class="icon">+</span></button>
+                <div class="faq-answer">
+                    <p>Máme otevřeno každý den od 9:00 do 18:00, včetně víkendů a svátků.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Je možné fotit v expozicích? <span class="icon">+</span></button>
+                <div class="faq-answer">
+                    <p>Ano, focení pro osobní účely je povoleno bez použití blesku a stativu.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Nabízíte slevy pro studenty? <span class="icon">+</span></button>
+                <div class="faq-answer">
+                    <p>Ano, po předložení platného průkazu ISIC mají studenti nárok na zlevněné vstupné. [cite: 8]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontakt">
+        <h2 class="section-title">Kontakt a umístění</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Kde nás najdete?</h3>
+                <p><strong>Adresa:</strong> Muzejní 123, 500 02 Hradec Králové 2</p>
+                <p><strong>Email:</strong> info@muzeum-vystavy.cz</p>
+                <p><strong>Telefon:</strong> +420 123 456 789</p>
+                <div class="opening-hours">
+                    <h4>Otevírací doba:</h4>
+                    <p>Po - Ne: 09:00 - 18:00</p>
+                </div>
+            </div>
+
+            <div class="map-box">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d40869.69507463649!2d15.777284317602907!3d50.191877316410284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470c2b4e7a7c627b%3A0x1c00af1298643eb0!2s500%2002%20Hradec%20Kr%C3%A1lov%C3%A9%202!5e0!3m2!1scs!2scz!4v1712684476229!5m2!1scs!2scz" 
+                    width="100%" 
+                    height="300" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="images/logo.png" alt="Logo Muzea" height="40">
+                <p>Vaše brána do světa historie a umění.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Rychlé odkazy</h4>
+                <ul>
+                    <li><a href="#vystavy">Výstavy</a></li>
+                    <li><a href="#vstupenky">Vstupenky</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-socials">
+                <h4>Sledujte nás</h4>
+                <div class="social-icons">
+                    <span>FB</span> <span>IG</span> <span>TW</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Muzeum Digitální Průvodce. Všechna práva vyhrazena. | Kučerová</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
