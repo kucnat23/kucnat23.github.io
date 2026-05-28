@@ -74,3 +74,24 @@ faqItems.forEach(item => {
         item.classList.toggle('active');
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const expoziceGrid = document.getElementById("expozice-grid");
+
+    if (expoziceGrid) {
+        fetch("php/php.php")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Nepodařilo se načíst data z PHP.");
+                }
+                return response.text();
+            })
+            .then(htmlObsah => {
+                expoziceGrid.innerHTML = htmlObsah;
+            })
+            .catch(error => {
+                console.error("Chyba:", error);
+                expoziceGrid.innerHTML = "<p style='color: white;'>Omlouváme se, výstavy se nepodařilo načíst.</p>";
+            });
+    }
+});
